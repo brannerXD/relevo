@@ -6,12 +6,12 @@ import { hayNube, sesion, supabase } from "./supabase";
 /**
  * Guardar y recuperar.
  *
- * El problema que resuelve: una cuidadora no fotografía los papeles de una
+ * El problema que resuelve: nadie fotografía los papeles de una
  * sentada. Los va juntando a lo largo de días. Sin esto, cerrar la pestaña
  * borraba todo el trabajo, que es la forma más rápida de perder a alguien.
  *
  * Todo falla en silencio a propósito: si la nube no está, la app sigue
- * funcionando en memoria. Nunca se le muestra a la usuaria un error de
+ * funcionando en memoria. Nunca se le muestra a la persona un error de
  * base de datos — eso no es problema suyo.
  */
 
@@ -86,7 +86,7 @@ export async function guardarDocumento(doc: DocumentoEnBolsa) {
   }
 }
 
-/** Actualiza un documento después de que la usuaria lo corrigió. */
+/** Actualiza un documento después de que la persona lo corrigió. */
 export async function confirmarDocumento(docId: string, doc: Documento) {
   if (!hayNube) return;
   try {

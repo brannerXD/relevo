@@ -47,7 +47,7 @@ export function olvidarProveedor() {
 export type ErrorTraducido = { mensaje: string; estado: number };
 
 /**
- * Traduce cualquier fallo a algo que la usuaria pueda leer, y deja el detalle
+ * Traduce cualquier fallo a algo que la persona pueda leer, y deja el detalle
  * técnico en la consola del servidor para que el equipo lo vea.
  */
 export function traducirError(error: unknown, contexto: string): ErrorTraducido {
@@ -72,7 +72,7 @@ export function traducirError(error: unknown, contexto: string): ErrorTraducido 
   }
   if (error instanceof Anthropic.BadRequestError) {
     // El detalle viene en inglés y en jerga del SDK. Queda en el log de arriba;
-    // a la usuaria no se le enseña. "procesar" además está prohibida en la voz.
+    // a la persona no se le enseña. "procesar" además está prohibida en la voz.
     return { mensaje: "No se pudo leer ese archivo. Intente con otra foto.", estado: 400 };
   }
   if (error instanceof Anthropic.APIConnectionError) {
@@ -98,7 +98,7 @@ export function traducirError(error: unknown, contexto: string): ErrorTraducido 
       };
     }
     // 503 sale seguido en la capa gratuita: el modelo está congestionado. No es
-    // culpa de la foto ni de la usuaria, y se arregla solo esperando.
+    // culpa de la foto ni de la persona, y se arregla solo esperando.
     if (g.status === 503) {
       return {
         mensaje: "Hay mucha gente usando esto ahora mismo. Intente en un minuto.",
@@ -106,7 +106,7 @@ export function traducirError(error: unknown, contexto: string): ErrorTraducido 
       };
     }
     // 404 = el nombre del modelo ya no existe. Google los retira sin avisar y
-    // le cierra los viejos a las cuentas nuevas. La usuaria no puede hacer
+    // le cierra los viejos a las cuentas nuevas. La persona no puede hacer
     // nada; quien mantiene esto sí, y el detalle quedó arriba en el log.
     if (g.status === 404) {
       return {

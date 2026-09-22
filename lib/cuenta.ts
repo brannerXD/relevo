@@ -7,7 +7,7 @@ import { hayNube, supabase } from "./supabase";
  * Cuentas.
  *
  * La decisión de diseño está aquí y no es menor: la cuenta NO va delante del
- * producto. La usuaria entra anónima, trabaja, y solo cuando ya tiene un plan
+ * producto. La persona entra anónima, trabaja, y solo cuando ya tiene un plan
  * que perder se le ofrece guardarlo.
  *
  * Por eso lo normal no es "registrarse", sino VINCULAR: el usuario anónimo que
@@ -167,7 +167,7 @@ function traducir(mensaje: string): string {
     return "Esa cuenta de Google ya está vinculada a otro usuario.";
   // Supabase manda "Unsupported provider: provider is not enabled" cuando el
   // proveedor no está configurado en el panel. Vale la pena distinguirlo: no
-  // es culpa de la usuaria y al equipo le dice exactamente qué falta.
+  // es culpa de la persona y al equipo le dice exactamente qué falta.
   if (m.includes("provider is not enabled") || m.includes("unsupported provider"))
     return "El acceso con Google todavía no está habilitado. Use su correo por ahora.";
   if (m.includes("manual linking is disabled"))

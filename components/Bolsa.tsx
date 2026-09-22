@@ -6,7 +6,7 @@ import type { Cuenta } from "@/lib/cuenta";
 
 /**
  * La espera puede pasar de veinte segundos. Una pantalla que no cambia en ese
- * rato se siente colgada, y la usuaria empieza a tocar botones o a recargar.
+ * rato se siente colgada, y la persona empieza a tocar botones o a recargar.
  * Así que el búho alterna de pose y el texto va cambiando: no acelera nada,
  * pero deja claro que la cosa sigue andando.
  */

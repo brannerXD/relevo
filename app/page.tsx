@@ -117,7 +117,7 @@ export default function Page() {
     // Una sola vez para todas las fotos: el token es el mismo.
     const cabeceras = await encabezados();
 
-    // En paralelo: la usuaria está esperando y cada foto es independiente.
+    // En paralelo: la persona está esperando y cada foto es independiente.
     const resultados = await Promise.all(
       preparadas.map(async (img) => {
         try {

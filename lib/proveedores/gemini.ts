@@ -31,7 +31,7 @@ function desenvolver(texto: string): string {
 /**
  * La capa gratuita devuelve 503 («high demand») con una frecuencia que no es
  * anecdótica: midiendo, 5 de cada 8 llamadas. Casi siempre pasa al segundo
- * intento, así que reintentar aquí evita que la usuaria vea un error por algo
+ * intento, así que reintentar aquí evita que la persona vea un error por algo
  * que se resuelve solo en dos segundos.
  *
  * Solo se reintenta lo que tiene sentido reintentar: 503 y 429 son transitorios;

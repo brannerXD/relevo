@@ -14,7 +14,7 @@ const PASOS: Paso[] = [
     animo: "reposo",
     titulo: "¿Qué es Relevo?",
     cuerpo:
-      "Cuidar a alguien también es cargar una bolsa de papeles: fórmulas, órdenes, autorizaciones. Relevo la convierte en un plan del mes.",
+      "Una enfermedad llega con una bolsa de papeles: fórmulas, órdenes, autorizaciones. Sean los suyos o los de alguien que usted cuida, Relevo los convierte en un plan del mes.",
   },
   {
     animo: "leyendo",
@@ -51,7 +51,7 @@ export function Guia({ onListo }: { onListo: () => void }) {
 
   return (
     // El botón va anclado abajo y el contenido se desplaza. En un teléfono de
-    // 360x640 —el más común entre nuestras usuarias— el último paso no cabe, y
+    // 360x640 —el más común entre nuestra gente— el último paso no cabe, y
     // un botón que hay que ir a buscar es un botón que no existe.
     <div className="pantalla mx-auto flex h-dvh max-w-md flex-col px-6 pt-6">
       <div className="flex flex-1 flex-col items-center justify-center overflow-y-auto py-2 text-center">

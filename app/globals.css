@@ -35,7 +35,8 @@ html {
 }
 
 body {
-  /* Mínimo 18px: la usuaria tiene 54 años y lee esto de noche en la cocina. */
+  /* Mínimo 18px. Quien usa esto o tiene 54 años y lee de noche en la cocina,
+     o tiene 78 y son sus propios papeles. Los dos necesitan letra grande. */
   font-size: 18px;
   line-height: 1.55;
   color: var(--color-tinta);
@@ -232,7 +233,7 @@ button,
 
 /*
  * Reacciona al toque. No hace nada útil y por eso mismo vale la pena: la
- * usuaria descubre que responde, y una herramienta que responde se siente
+ * persona descubre que responde, y una herramienta que responde se siente
  * menos como un formulario.
  */
 .buho--tocado .buho__cuerpo {

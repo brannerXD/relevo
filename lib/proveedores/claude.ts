@@ -33,7 +33,7 @@ export function proveedorClaude(): Proveedor {
         system: SISTEMA_LEER,
         output_format: betaZodOutputFormat(Documento),
         // Extraer campos de una foto no necesita razonamiento profundo, y aquí
-        // la latencia se siente: la usuaria mira la barra de progreso.
+        // la latencia se siente: la persona mira la barra de progreso.
         output_config: { effort: "medium" },
         messages: [
           {

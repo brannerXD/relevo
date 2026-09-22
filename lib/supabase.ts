@@ -5,9 +5,9 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 /**
  * Cliente de Supabase con sesión anónima.
  *
- * No le pedimos cuenta a nadie. Una señora de 54 años que apenas quiere
+ * No le pedimos cuenta a nadie. Alguien de 54 años que apenas quiere
  * organizar unos papeles no va a inventarse una contraseña, y obligarla
- * sería perder a la usuaria antes de empezar.
+ * sería perder a la persona antes de empezar.
  *
  * Pero anónimo NO significa abierto: cada dispositivo recibe un usuario real
  * de Supabase, y las políticas de la base de datos solo le dejan ver y tocar
@@ -40,7 +40,7 @@ export function supabase(): SupabaseClient {
  *
  * Las rutas que gastan plata exigen sesión (ver lib/guardia.ts). Como la
  * aplicación ya abre una sesión anónima al entrar, esto no le pide nada a la
- * usuaria: solo demuestra que la petición viene de la aplicación y no de
+ * persona: solo demuestra que la petición viene de la aplicación y no de
  * alguien golpeando la URL desde afuera.
  */
 export async function encabezados(): Promise<Record<string, string>> {

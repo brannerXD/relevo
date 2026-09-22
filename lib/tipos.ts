@@ -38,7 +38,7 @@ export type TipoDocumento = z.infer<typeof TipoDocumento>;
 export const Documento = z.object({
   tipo: TipoDocumento,
   legible: z.boolean(),
-  /** Por qué no se pudo leer, en palabras que la usuaria entienda. */
+  /** Por qué no se pudo leer, en palabras que la persona entienda. */
   motivo_ilegible: z.string().nullable(),
   paciente: z.string().nullable(),
   entidad: z.string().nullable(),

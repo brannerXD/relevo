@@ -19,13 +19,13 @@ export function Offline() {
     const registrar = () => {
       navigator.serviceWorker.register("/sw.js").catch((e) => {
         // Que falle no puede tumbar la aplicación: solo se queda sin modo
-        // sin señal. La usuaria no tiene por qué enterarse.
+        // sin señal. La persona no tiene por qué enterarse.
         console.error("[relevo] no se pudo registrar el service worker:", e);
       });
     };
 
     // Después de cargar, para no competir por ancho de banda con la pantalla
-    // que la usuaria está esperando ver.
+    // que la persona está esperando ver.
     if (document.readyState === "complete") registrar();
     else window.addEventListener("load", registrar, { once: true });
   }, []);

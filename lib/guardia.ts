@@ -15,7 +15,7 @@ import { createClient } from "@supabase/supabase-js";
  *      de último: no tiene sentido validar el token de una petición que ya
  *      sabemos que es demasiado grande.
  *
- * Exigir sesión no le pide nada a la usuaria: la aplicación ya le abre una
+ * Exigir sesión no le pide nada a la persona: la aplicación ya le abre una
  * sesión anónima al entrar. Lo que bloquea es a quien llega por fuera de la
  * aplicación, que es justo de quien nos queremos cuidar.
  */
@@ -107,7 +107,7 @@ type Opciones = {
 };
 
 /**
- * Corre las tres capas. Devuelve el id de la usuaria para poder registrarlo.
+ * Corre las tres capas. Devuelve el id de la persona para poder registrarlo.
  * Lanza `Rechazado` con el estado y el mensaje ya en español.
  */
 export async function guardia(req: Request, { topeMB, porMinuto }: Opciones): Promise<string | null> {
@@ -132,7 +132,7 @@ export async function guardia(req: Request, { topeMB, porMinuto }: Opciones): Pr
 /**
  * Vercel corta las funciones a los 60 s en el plan gratuito y lo que devuelve
  * es un 504 sin explicación. Preferimos cortar nosotros un poco antes y
- * decirle a la usuaria algo que entienda.
+ * decirle a la persona algo que entienda.
  */
 export function conReloj<T>(promesa: Promise<T>, segundos: number, mensaje: string): Promise<T> {
   return Promise.race([

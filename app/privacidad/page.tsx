@@ -12,9 +12,9 @@ export default function Privacidad() {
     <Legal titulo="Política de tratamiento de datos" actualizado="22 de septiembre de 2026">
       <p>
         Relevo trabaja con fotos de documentos médicos. En Colombia eso es un{" "}
-        <strong>dato sensible</strong>, y casi siempre no es suyo sino de la persona
-        que usted cuida. Por eso esta política está escrita para que se entienda,
-        no para que nadie la firme sin leerla.
+        <strong>dato sensible</strong>, sea suyo o de la persona que usted cuida.
+        Por eso esta política está escrita para que se entienda, no para que nadie
+        la firme sin leerla.
       </p>
 
       <div className="aviso">
@@ -89,15 +89,20 @@ export default function Privacidad() {
         transferencia internacional. Si eso no le parece, no suba fotos.
       </p>
 
-      <h2>5. Papeles de otra persona</h2>
+      <h2>5. Si los papeles no son suyos</h2>
       <p>
-        Casi nadie usa Relevo para sus propios papeles: los usa para los de su mamá,
-        su papá, su hijo. Esa persona tiene derechos sobre sus datos de salud aunque
+        Relevo se usa de dos maneras. Hay quien organiza <strong>sus propios
+        papeles</strong> — su fórmula, su autorización, su carné— y en ese caso
+        todo lo de arriba se aplica directo: usted decide sobre lo suyo.
+      </p>
+      <p>
+        Y hay quien los organiza <strong>para otra persona</strong>: su mamá, su
+        papá, su hijo. Esa persona tiene derechos sobre sus datos de salud aunque
         no sea quien abre la aplicación.
       </p>
       <div className="aviso">
         <p style={{ marginBottom: 0 }}>
-          Al subir documentos de otra persona, usted declara que{" "}
+          Si sube documentos de otra persona, usted declara que{" "}
           <strong>tiene su permiso</strong>, o que es su representante legal, o que
           esa persona no está en condiciones de darlo y usted responde por su
           cuidado. Nosotros no podemos verificarlo: confiamos en usted, y por eso se

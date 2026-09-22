@@ -12,7 +12,7 @@ const googleListo = process.env.NEXT_PUBLIC_GOOGLE_LISTO === "1";
 
 /**
  * Tiene que coincidir con el mínimo configurado en Supabase (Authentication →
- * Sign In / Providers → Email). Si aquí fuera menor, la usuaria escribiría una
+ * Sign In / Providers → Email). Si aquí fuera menor, la persona escribiría una
  * contraseña que la pantalla acepta y el servidor rechaza — y el mensaje que
  * vería sería uno genérico, sin decirle qué corregir.
  */

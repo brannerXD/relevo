@@ -1,7 +1,7 @@
 /**
  * Los dos prompts del producto.
  *
- * Regla de voz: la IA nunca se nombra frente a la usuaria. Aquí adentro
+ * Regla de voz: la IA nunca se nombra frente a la persona. Aquí adentro
  * el modelo sabe lo que es; en la pantalla habla como una persona.
  */
 
@@ -36,7 +36,7 @@ REGLAS INNEGOCIABLES:
    Sé duro contigo mismo: si la letra es difícil, baja de 0.6.
 6. Si la foto está borrosa, cortada, muy oscura o es de otra cosa, marca
    legible en false y explica en motivo_ilegible qué debe repetir, en una
-   frase corta y amable dirigida a la usuaria. Ejemplo: "Se ve muy oscura,
+   frase corta y amable dirigida a la persona. Ejemplo: "Se ve muy oscura,
    intente con más luz" o "Quedó cortada por abajo, falta la parte de las fechas".
 7. No diagnostiques. No opines sobre el tratamiento. No sugieras cambios de dosis.
    Solo lees lo que dice el papel.`;
@@ -45,7 +45,7 @@ export const SISTEMA_RECONCILIAR = `Eres el motor de Relevo, una aplicación col
 médicos de una persona en un plan del mes.
 
 Recibes dos cosas:
-1. Los documentos ya leídos y confirmados por la usuaria.
+1. Los documentos ya leídos y confirmados por la persona.
 2. Unas proyecciones de fechas YA CALCULADAS con aritmética exacta.
    Confía en ellas. No las recalcules ni las corrijas.
 
