@@ -1,8 +1,30 @@
 "use client";
 
-import { useRef } from "react";
-import { Buho } from "./Buho";
+import { useEffect, useRef, useState } from "react";
+import { Buho, type Animo } from "./Buho";
 import type { Cuenta } from "@/lib/cuenta";
+
+/**
+ * La espera puede pasar de veinte segundos. Una pantalla que no cambia en ese
+ * rato se siente colgada, y la usuaria empieza a tocar botones o a recargar.
+ * Así que el búho alterna de pose y el texto va cambiando: no acelera nada,
+ * pero deja claro que la cosa sigue andando.
+ */
+const COMPASES: { animo: Animo; texto: string }[] = [
+  { animo: "leyendo", texto: "Puede tardar un momento. La letra de los médicos no es fácil ni para nosotros." },
+  { animo: "espera", texto: "Ahí vamos. Mirando fechas, dosis y cantidades." },
+  { animo: "pensando", texto: "Casi. Cuadrando lo que dice cada papel." },
+];
+
+function useCompas(activo: boolean) {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    if (!activo) { setI(0); return; }
+    const t = setInterval(() => setI((n) => (n + 1) % COMPASES.length), 6500);
+    return () => clearInterval(t);
+  }, [activo]);
+  return COMPASES[i];
+}
 
 type Props = {
   onFotos: (archivos: File[]) => void;
@@ -26,12 +48,13 @@ export function Bolsa({
   onSalir,
 }: Props) {
   const input = useRef<HTMLInputElement>(null);
+  const compas = useCompas(leyendo);
 
   if (leyendo) {
     const pct = progreso.total ? (progreso.hechas / progreso.total) * 100 : 0;
     return (
       <div className="pantalla flex min-h-dvh flex-col items-center justify-center gap-6 px-6 text-center">
-        <Buho animo="leyendo" size={132} />
+        <Buho animo={compas.animo} size={132} sombra />
         <p className="font-titulo text-2xl">Estoy leyendo sus papeles…</p>
         <p className="text-tinta-suave">
           {progreso.hechas} de {progreso.total}
@@ -42,9 +65,8 @@ export function Bolsa({
             style={{ width: `${pct}%` }}
           />
         </div>
-        <p className="max-w-xs text-[15px] text-tinta-suave">
-          Puede tardar un momento. La letra de los médicos no es fácil ni para
-          nosotros.
+        <p key={compas.texto} className="aparece max-w-xs text-[15px] text-tinta-suave">
+          {compas.texto}
         </p>
       </div>
     );
@@ -77,7 +99,7 @@ export function Bolsa({
       </div>
 
       <div className="flex flex-col items-center gap-3 text-center">
-        <Buho animo="reposo" size={104} />
+        <Buho animo="reposo" size={104} prioridad sombra />
         <h1 className="font-titulo text-4xl">Relevo</h1>
         <p className="text-tinta-suave">
           Tú con lo importante. Nosotros con los papeles.

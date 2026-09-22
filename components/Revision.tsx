@@ -47,10 +47,22 @@ export function Revision({ documentos, onCambiar, onQuitar, onListo, armando }: 
 
   return (
     <div className="pantalla mx-auto max-w-md px-5 py-8">
-      <h1 className="font-titulo text-3xl">Revise lo que entendí</h1>
-      <p className="mt-2 text-tinta-suave">
-        Toque cualquier dato para corregirlo. Usted tiene la última palabra.
-      </p>
+      <header className="flex items-start gap-3">
+        {/*
+          Cuando algo no se pudo leer, el búho lo admite con la cara. Es más
+          honesto que un aviso de error, y baja el susto: no se dañó nada, solo
+          no entendió una foto.
+        */}
+        <span className="-mt-2 shrink-0">
+          <Buho animo={ilegibles > 0 ? "confundido" : "pensando"} size={58} />
+        </span>
+        <div>
+          <h1 className="font-titulo text-3xl leading-tight">Revise lo que entendí</h1>
+          <p className="mt-1 text-tinta-suave">
+            Toque cualquier dato para corregirlo. Usted tiene la última palabra.
+          </p>
+        </div>
+      </header>
 
       {(dudosos > 0 || ilegibles > 0) && (
         <div className="mt-4 rounded-xl border border-barro bg-barro-suave/30 p-4 text-[16px]">

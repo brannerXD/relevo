@@ -29,7 +29,15 @@ const PASOS: Paso[] = [
       "Miramos todos los papeles juntos: qué medicamento se está acabando, qué fórmula se vence, qué autorización le falta. Eso es lo que nadie alcanza a revisar de noche en la cocina.",
   },
   {
-    animo: "listo",
+    // Va antes del final a propósito: hay que decirlo, pero no se termina una
+    // presentación con una advertencia. Se termina con lo que la persona gana.
+    animo: "alerta",
+    titulo: "Lo que no hacemos",
+    cuerpo:
+      "A veces nos equivocamos leyendo un papel. Por eso le mostramos siempre lo que entendimos, antes de armar nada.",
+  },
+  {
+    animo: "celebra",
     titulo: "Y le queda el plan",
     cuerpo:
       "Qué hacer, qué día, dónde y qué llevar. Usted revisa todo antes de que aparezca, y decide. Nosotros solo le ahorramos las vueltas de más.",
@@ -48,7 +56,9 @@ export function Guia({ onListo }: { onListo: () => void }) {
     <div className="pantalla mx-auto flex h-dvh max-w-md flex-col px-6 pt-6">
       <div className="flex flex-1 flex-col items-center justify-center overflow-y-auto py-2 text-center">
         <div key={i} className="aparece">
-          <Buho animo={paso.animo} size={112} />
+          {/* key: fuerza el remontaje para que las poses de una sola pasada
+              (celebra, alerta) se vuelvan a disparar al cambiar de paso. */}
+          <Buho key={i} animo={paso.animo} size={112} sombra />
         </div>
 
         <h1 key={`t${i}`} className="aparece mt-6 font-titulo text-3xl">
@@ -59,7 +69,13 @@ export function Guia({ onListo }: { onListo: () => void }) {
           {paso.cuerpo}
         </p>
 
-        {ultimo && (
+        {/*
+          La lista va aquí, en el paso de los límites, y no en el último. Antes
+          estaba al final y repetía lo mismo dos veces; además terminar la
+          presentación con una advertencia deja mal sabor. Se termina con lo
+          que la persona gana.
+        */}
+        {paso.animo === "alerta" && (
           <div className="aparece mt-8 w-full rounded-2xl border border-arena-borde bg-white p-5 text-left">
             <p className="font-titulo text-lg">Lo que Relevo no hace</p>
             <ul className="mt-2 space-y-1 text-[16px] text-tinta-suave">

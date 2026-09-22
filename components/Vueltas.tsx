@@ -54,7 +54,7 @@ export function Vueltas({
       <header className="flex items-start gap-3">
         <span className="-mt-3 shrink-0">
           <Buho
-            animo={pendientes === 0 ? "listo" : hayUrgente ? "alerta" : "reposo"}
+            animo={pendientes === 0 ? "celebra" : hayUrgente ? "alerta" : "reposo"}
             size={54}
           />
         </span>

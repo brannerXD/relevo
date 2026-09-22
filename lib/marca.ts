@@ -19,27 +19,42 @@ export const COLORES = {
 } as const;
 
 /**
- * El búho, reducido a lo que sobrevive a 16 píxeles: cuerpo, dos ojos
- * grandes, pico y el aro de la lupa. Sin mango, sin alas, sin plumas — a ese
- * tamaño todo eso es ruido.
+ * La CARA del búho, sin fondo.
+ *
+ * Solo la cara, y por una razón: en una pestaña el ícono se ve a 16 píxeles.
+ * A ese tamaño un búho de cuerpo entero es una mancha — la cabeza queda del
+ * tamaño de una arveja y los ojos, que son lo único reconocible, desaparecen.
+ * Recortado a la cara, los ojos ocupan media pestaña y se sabe qué es.
+ *
+ * Sin fondo, además, para que se vea igual de bien en una pestaña clara que
+ * en una oscura.
  */
-export function iconoSVG(lado = 512): string {
+export function caraSVG(lado = 512, fondo?: string): string {
   const cx = lado / 2;
   const cy = lado / 2;
+  const escala = ((lado / 96) * 0.92).toFixed(4);
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${lado} ${lado}" width="${lado}" height="${lado}" role="img" aria-label="Relevo">
-  <rect width="${lado}" height="${lado}" fill="${COLORES.arena}"/>
-  <g transform="translate(${cx} ${cy}) scale(${((lado / 96) * 0.78).toFixed(4)}) translate(-48 -52)">
-    <path d="M26 33 L31 17 L40 30 Z" fill="${COLORES.barroOscuro}"/>
-    <path d="M70 33 L65 17 L56 30 Z" fill="${COLORES.barroOscuro}"/>
-    <ellipse cx="48" cy="55" rx="29" ry="30" fill="${COLORES.barro}"/>
-    <circle cx="36" cy="49" r="12" fill="${COLORES.arena}"/>
-    <circle cx="36" cy="49" r="5.6" fill="#3B2A22"/>
-    <circle cx="60" cy="49" r="12" fill="${COLORES.arena}"/>
-    <circle cx="60" cy="49" r="5.6" fill="#3B2A22"/>
-    <path d="M48 57 L43 66 L53 66 Z" fill="${COLORES.pronto}"/>
-    <path d="M38 83 L38 90 M58 83 L58 90" stroke="${COLORES.pronto}" stroke-width="4" stroke-linecap="round"/>
-    <circle cx="36" cy="49" r="15.5" fill="none" stroke="${COLORES.monte}" stroke-width="5"/>
+  ${fondo ? `<rect width="${lado}" height="${lado}" fill="${fondo}"/>` : ""}
+  <g transform="translate(${cx} ${cy}) scale(${escala}) translate(-48 -48)">
+    <path d="M22 30 L27 9 L41 26 Z" fill="${COLORES.barroOscuro}"/>
+    <path d="M74 30 L69 9 L55 26 Z" fill="${COLORES.barroOscuro}"/>
+    <ellipse cx="48" cy="50" rx="35" ry="33" fill="${COLORES.barro}"/>
+    <circle cx="34" cy="45" r="15" fill="${COLORES.arena}"/>
+    <circle cx="62" cy="45" r="15" fill="${COLORES.arena}"/>
+    <circle cx="34" cy="45" r="7" fill="#3B2A22"/>
+    <circle cx="62" cy="45" r="7" fill="#3B2A22"/>
+    <circle cx="36.4" cy="42.4" r="2.3" fill="${COLORES.arena}"/>
+    <circle cx="64.4" cy="42.4" r="2.3" fill="${COLORES.arena}"/>
+    <path d="M48 54 L42 65 L54 65 Z" fill="${COLORES.pronto}"/>
+    <circle cx="34" cy="45" r="19" fill="none" stroke="${COLORES.monte}" stroke-width="5.5"/>
   </g>
 </svg>`;
 }
+
+/**
+ * Se mantiene el nombre viejo para no romper a quien lo importe, pero ahora
+ * devuelve la cara. El ícono con fondo solo lo necesita el maskable de
+ * Android, y ese se pide explícitamente.
+ */
+export const iconoSVG = caraSVG;

@@ -241,6 +241,50 @@ Están en el prompt, en la interfaz y en la propuesta. No son decorativos:
 - No redacta tutelas ni derechos de petición.
 - Nada llega al plan sin pasar por la pantalla de confirmación.
 
+## El búho
+
+Ocho poses en `public/buho/`: `saluda`, `lee`, `compara`, `listo`, `alerta`,
+`confundido`, `celebra`, `espera`. Generadas contra las originales como
+referencia para que sea el mismo personaje y no cambie de forma entre
+pantallas.
+
+**El movimiento va en dos capas**, y ahí está toda la diferencia entre un
+muñeco y un animalito:
+
+- `.buho` flota lento, siempre, con el mismo ciclo.
+- `.buho__cuerpo` hace lo que pide el ánimo, con otra duración.
+
+Las duraciones son números feos a propósito (4.5s, 2.6s, 6.7s). Si fueran
+múltiplos entre sí volverían a coincidir y se le vería el bucle a los diez
+segundos. Como no coinciden, el movimiento no se repite a la vista.
+
+Detalles que valen más de lo que cuestan:
+
+- **Sombrita en el piso** (`sombra`) donde el búho es grande. Sin ella no
+  flota: levita.
+- **Reacciona al toque.** No hace nada útil y por eso vale: la usuaria
+  descubre que responde, y algo que responde se siente menos como un
+  formulario.
+- **La pantalla de espera cambia sola.** La lectura puede pasar de veinte
+  segundos; el búho alterna de pose y el texto va rotando. No acelera nada,
+  pero una pantalla quieta ese rato se siente colgada y la gente recarga.
+- **`alerta` tiembla una vez y después solo vigila.** Un temblor en bucle no
+  es urgencia, es ansiedad, y esta gente ya tiene.
+
+Todo se apaga con `prefers-reduced-motion`.
+
+### El ícono de pestaña
+
+Solo la cara, sin fondo (`lib/marca.ts`). A 16 píxeles un búho de cuerpo
+entero es una mancha: la cabeza queda del tamaño de una arveja y los ojos, que
+son lo único reconocible, desaparecen. Recortado a la cara, los ojos ocupan
+media pestaña.
+
+Sin fondo para que se vea igual en una pestaña clara que en una oscura. La
+única versión con fondo es la del ícono *maskable* de Android, que se pide con
+`/icono?fondo=1` — ahí el sistema recorta a un círculo y un PNG transparente
+deja un hueco.
+
 ## Voz
 
 - **Usted**, nunca tú.

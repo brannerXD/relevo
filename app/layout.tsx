@@ -22,7 +22,16 @@ export const metadata: Metadata = {
   description: "Tú con lo importante. Nosotros con los papeles.",
   manifest: "/manifest.webmanifest",
   appleWebApp: { capable: true, title: "Relevo", statusBarStyle: "default" },
-  icons: { icon: "/icono", apple: "/icono" },
+  icons: {
+    // El SVG primero: es nítido a cualquier tamaño y pesa menos de 1 KB. El
+    // PNG de 32 queda de respaldo para los navegadores que todavía no sirven
+    // bien un favicon vectorial.
+    icon: [
+      { url: "/icono", type: "image/svg+xml" },
+      { url: "/favicon-32.png", type: "image/png", sizes: "32x32" },
+    ],
+    apple: "/apple-icon.png",
+  },
 };
 
 export const viewport: Viewport = {
