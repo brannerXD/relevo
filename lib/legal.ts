@@ -1,12 +1,13 @@
 /**
  * Datos de contacto de las páginas legales.
  *
- * Está vacío a propósito. Una política de tratamiento de datos sin un canal
- * real de contacto no le sirve a nadie: es justo por ahí por donde una persona
- * ejerce los derechos que le da la Ley 1581 de 2012.
+ * Este es el canal por el que una persona ejerce los derechos que le da la Ley
+ * 1581 de 2012: saber qué tenemos suyo, pedir que lo corrijamos, pedir que lo
+ * borremos, retirar el permiso. Si nadie revisa este buzón, esos derechos son
+ * papel mojado.
  *
- * No pusimos aquí el correo personal de nadie del equipo porque publicar la
- * dirección de una persona en un sitio abierto es una decisión suya, no
- * nuestra. Escriba el correo que quiera atender y listo.
+ * Queda publicado en un sitio abierto, así que va a recibir correo basura. Se
+ * aguanta: una política sin contacto no cumple, y una con un contacto falso
+ * cumple menos todavía.
  */
-export const CORREO_CONTACTO = "";
+export const CORREO_CONTACTO = "branner360@gmail.com";

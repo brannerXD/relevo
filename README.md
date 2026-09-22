@@ -413,10 +413,9 @@ El aviso de aceptación está en la pantalla de cuenta, que es el momento en que
 la usuaria entrega un correo. Enterrarlo en un pie de página sería cumplir la
 forma y no el fondo.
 
-**Falta el correo de contacto** (`lib/legal.ts`). Sin un canal real, los
-derechos de la Ley 1581 no se pueden ejercer. Mientras esté vacío, la propia
-página lo dice en vez de inventar una dirección — una dirección falsa en una
-política de datos es peor que ninguna.
+**El correo de contacto** está en `lib/legal.ts` y es el canal por el que una
+persona ejerce los derechos de la Ley 1581. **Hay que revisar ese buzón.** Si
+nadie lo lee, esos derechos son papel mojado y la política no cumple.
 
 Esto está escrito para ser honesto y útil, no para ser blindado. Si Relevo deja
 de ser un prototipo, que lo revise un abogado.
