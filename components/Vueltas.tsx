@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { Plan } from "@/lib/tipos";
 import { fechaBonita, mesActual, diasHasta } from "@/lib/proyeccion";
 import { Buho } from "./Buho";
+import { PieLegal } from "./Legal";
 
 const COLOR = {
   urgente: { punto: "bg-urgente", borde: "border-urgente", texto: "text-urgente" },
@@ -179,6 +180,8 @@ export function Vueltas({
         Relevo no reemplaza a su médico ni a su EPS. Si algo no le cuadra,
         pregunte antes de actuar.
       </p>
+
+      <PieLegal className="mt-4" />
     </div>
   );
 }

@@ -150,8 +150,17 @@ function traducir(mensaje: string): string {
     return "Ese correo ya tiene una cuenta. Intente iniciar sesión.";
   if (m.includes("email address") && m.includes("invalid"))
     return "Ese correo no parece válido.";
-  if (m.includes("password") && m.includes("6"))
-    return "La contraseña debe tener al menos 6 caracteres.";
+  // Supabase dice el número en inglés ("at least 8 characters"). Lo sacamos
+  // del propio mensaje en vez de escribirlo aquí, para que no se desincronice
+  // el día que cambie el mínimo en el panel.
+  if (m.includes("password") && /\d/.test(m)) {
+    const n = m.match(/(\d+)/)?.[1];
+    return n
+      ? `La contraseña debe tener al menos ${n} caracteres.`
+      : "Esa contraseña es muy corta.";
+  }
+  if (m.includes("password") && (m.includes("weak") || m.includes("easy to guess")))
+    return "Esa contraseña es muy fácil de adivinar. Escoja otra.";
   if (m.includes("email not confirmed"))
     return "Le mandamos un correo para confirmar. Ábralo y vuelva.";
   if (m.includes("identity is already linked") || m.includes("already linked"))

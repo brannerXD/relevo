@@ -142,3 +142,42 @@ button,
     transition-duration: 0.001ms !important;
   }
 }
+
+/*
+  Páginas legales. No usamos un plugin de tipografía por una sola pantalla:
+  son seis reglas y así no entra una dependencia más al proyecto.
+*/
+.legal h2 {
+  font-family: var(--font-titulo);
+  font-size: 1.4rem;
+  line-height: 1.25;
+  margin: 2.2rem 0 0.6rem;
+}
+.legal h3 {
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin: 1.5rem 0 0.4rem;
+}
+.legal p,
+.legal li {
+  margin-bottom: 0.85rem;
+}
+.legal ul {
+  list-style: disc;
+  padding-left: 1.35rem;
+}
+.legal strong {
+  font-weight: 700;
+}
+.legal a {
+  color: var(--color-barro-oscuro);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.legal .aviso {
+  border: 1px solid var(--color-arena-borde);
+  background: color-mix(in srgb, var(--color-barro-suave) 22%, transparent);
+  border-radius: 0.9rem;
+  padding: 1rem 1.15rem;
+  margin: 1.4rem 0;
+}

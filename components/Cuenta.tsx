@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Buho } from "./Buho";
 import { conGoogle, entrar, guardarCuenta, type Cuenta } from "@/lib/cuenta";
 
@@ -8,6 +9,14 @@ type Modo = "guardar" | "entrar";
 
 /** Se enciende cuando el proveedor de Google ya quedó configurado en Supabase. */
 const googleListo = process.env.NEXT_PUBLIC_GOOGLE_LISTO === "1";
+
+/**
+ * Tiene que coincidir con el mínimo configurado en Supabase (Authentication →
+ * Sign In / Providers → Email). Si aquí fuera menor, la usuaria escribiría una
+ * contraseña que la pantalla acepta y el servidor rechaza — y el mensaje que
+ * vería sería uno genérico, sin decirle qué corregir.
+ */
+const MINIMO_CLAVE = 8;
 
 type Props = {
   cuenta: Cuenta | null;
@@ -33,8 +42,15 @@ export function PantallaCuenta({ cuenta, tieneTrabajo, onListo, onVolver }: Prop
     setError(null);
     setAviso(null);
 
-    if (!correo.trim() || clave.length < 6) {
-      setError("Escriba su correo y una contraseña de al menos 6 caracteres.");
+    // Al entrar no exigimos el mínimo: si alguien creó su cuenta cuando el
+    // mínimo era menor, su contraseña sigue siendo válida y no la vamos a
+    // dejar por fuera de lo suyo por un cambio nuestro.
+    if (!correo.trim() || (guardando ? clave.length < MINIMO_CLAVE : !clave)) {
+      setError(
+        guardando
+          ? `Escriba su correo y una contraseña de al menos ${MINIMO_CLAVE} caracteres.`
+          : "Escriba su correo y su contraseña.",
+      );
       return;
     }
 
@@ -144,7 +160,7 @@ export function PantallaCuenta({ cuenta, tieneTrabajo, onListo, onVolver }: Prop
               autoComplete={guardando ? "new-password" : "current-password"}
               value={clave}
               onChange={(e) => setClave(e.target.value)}
-              placeholder="Al menos 6 caracteres"
+              placeholder={guardando ? `Al menos ${MINIMO_CLAVE} caracteres` : "Su contraseña"}
               className="w-full rounded-xl border border-arena-borde bg-white px-4 py-3 pr-20 text-[17px] focus:border-barro focus:outline-none"
             />
             <button
@@ -199,6 +215,24 @@ export function PantallaCuenta({ cuenta, tieneTrabajo, onListo, onVolver }: Prop
         <p className="mt-6 text-center text-[15px] leading-relaxed text-tinta-suave">
           Sus papeles no se van a ningún lado: se quedan en la misma cuenta,
           solo que ahora con su correo.
+        </p>
+      )}
+
+      {/*
+        Aquí es donde toca decirlo: es el momento en que nos entrega un correo.
+        Enterrarlo en un pie de página sería cumplir la forma y no el fondo.
+      */}
+      {guardando && (
+        <p className="mt-6 text-center text-[15px] leading-relaxed text-tinta-suave">
+          Al guardar su cuenta acepta los{" "}
+          <Link href="/terminos" className="underline underline-offset-4">
+            términos de uso
+          </Link>{" "}
+          y la{" "}
+          <Link href="/privacidad" className="underline underline-offset-4">
+            política de datos
+          </Link>
+          .
         </p>
       )}
     </div>

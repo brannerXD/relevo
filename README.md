@@ -306,6 +306,51 @@ Android recorta a un círculo y si no le comería las patas.
    confirmación llegan apuntando a `localhost` y nadie puede confirmar su
    cuenta.** Se olvida siempre.
 
+## Lo legal
+
+`/privacidad` y `/terminos`. No son relleno: Relevo mueve **datos de salud**,
+que en Colombia son dato sensible (Ley 1581 de 2012), y casi siempre son de un
+tercero — la mamá, el papá — que no es quien abre la aplicación.
+
+Tres cosas que la política dice de frente y que suelen omitirse:
+
+- **Las fotos salen del país.** Van a Google para que las lea, y quedan
+  guardadas en Supabase. Eso es transferencia internacional y hay que
+  declararlo, no esconderlo.
+- **La cadena de consentimiento.** Quien sube los papeles declara que tiene
+  permiso de la persona dueña de esos datos. No lo podemos verificar; por eso
+  se dice explícitamente en vez de asumirlo.
+- **Se nombra la IA.** En la interfaz no se nombra nunca, por decisión de
+  producto. En la política **sí**, porque ahí manda la transparencia legal y no
+  la voz de marca.
+
+El aviso de aceptación está en la pantalla de cuenta, que es el momento en que
+la usuaria entrega un correo. Enterrarlo en un pie de página sería cumplir la
+forma y no el fondo.
+
+**Falta el correo de contacto** (`lib/legal.ts`). Sin un canal real, los
+derechos de la Ley 1581 no se pueden ejercer. Mientras esté vacío, la propia
+página lo dice en vez de inventar una dirección — una dirección falsa en una
+política de datos es peor que ninguna.
+
+Esto está escrito para ser honesto y útil, no para ser blindado. Si Relevo deja
+de ser un prototipo, que lo revise un abogado.
+
+## Contraseñas
+
+El mínimo es **8 caracteres**, y está en dos sitios que tienen que coincidir:
+Supabase (Authentication → Sign In / Providers → Email) y `MINIMO_CLAVE` en
+`components/Cuenta.tsx`. Si el de la interfaz fuera menor, la usuaria escribiría
+algo que la pantalla acepta y el servidor rechaza.
+
+Al **entrar** no se exige el mínimo: quien creó su cuenta cuando el mínimo era 6
+sigue pudiendo entrar. Cambiar la regla no puede dejar a alguien por fuera de lo
+suyo.
+
+La protección contra contraseñas filtradas (HaveIBeenPwned) **solo existe en el
+plan Pro** de Supabase, así que el aviso de seguridad sobre eso va a seguir
+apareciendo mientras el proyecto esté en el plan gratuito.
+
 ## Lo que falta
 
 - Recordatorios por WhatsApp.
