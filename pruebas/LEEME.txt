@@ -1,0 +1,13 @@
+Ponga aquí las fotos de prueba (.jpg, .png).
+No suba a este repositorio documentos de salud de personas reales.
+
+formula-sintetica.png
+  Fórmula médica INVENTADA, generada para probar el camino completo.
+  No existe esa paciente, ni ese médico, ni ese número de fórmula.
+  Es segura de compartir y de mostrar en el video.
+
+  Ojo con lo que NO prueba: está escrita con una tipografía de imitación
+  de letra manuscrita, que es mucho más limpia que la letra real de un
+  médico sobre papel calcado. Que Relevo lea esta no significa que lea
+  una de verdad. Esa prueba sigue pendiente y necesita una foto real
+  con permiso de quien sea el papel.
