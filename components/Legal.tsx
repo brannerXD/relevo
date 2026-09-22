@@ -69,12 +69,20 @@ export function Legal({
 /** Pie discreto para enlazar lo legal desde las pantallas normales. */
 export function PieLegal({ className = "" }: { className?: string }) {
   return (
+    // inline-block + py-2 para que el área de toque llegue a 44 px de alto.
+    // Como texto suelto medían 21 y había que apuntarles.
     <p className={`text-center text-[15px] text-tinta-suave ${className}`}>
-      <Link href="/privacidad" className="underline underline-offset-4">
+      <Link
+        href="/privacidad"
+        className="inline-block px-2 py-3 underline underline-offset-4"
+      >
         Privacidad
       </Link>
-      {" · "}
-      <Link href="/terminos" className="underline underline-offset-4">
+      <span aria-hidden="true">·</span>
+      <Link
+        href="/terminos"
+        className="inline-block px-2 py-3 underline underline-offset-4"
+      >
         Términos
       </Link>
     </p>

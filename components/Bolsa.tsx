@@ -129,7 +129,7 @@ export function Bolsa({
 
         <button
           onClick={() => input.current?.click()}
-          className="mt-5 w-full rounded-xl bg-barro px-6 py-4 text-lg font-semibold text-white transition hover:brightness-105 active:scale-[0.98]"
+          className="mt-5 w-full rounded-xl bg-barro-boton px-6 py-4 text-lg font-semibold text-white transition hover:brightness-105 active:scale-[0.98]"
         >
           Tomar las fotos
         </button>

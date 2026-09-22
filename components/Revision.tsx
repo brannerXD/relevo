@@ -118,7 +118,10 @@ export function Revision({ documentos, onCambiar, onQuitar, onListo, armando }: 
               <button
                 onClick={() => onQuitar(doc.id)}
                 aria-label="Quitar este documento"
-                className="rounded-lg px-2 text-tinta-suave"
+                // 44x44 mínimo. Antes medía 31 de ancho, y es una acción que
+                // borra un papel: difícil de acertar a propósito y fácil de
+                // darle sin querer apuntando a otra cosa.
+                className="-mr-2 flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-tinta-suave"
               >
                 ✕
               </button>

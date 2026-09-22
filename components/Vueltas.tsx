@@ -8,7 +8,7 @@ import { PieLegal } from "./Legal";
 
 const COLOR = {
   urgente: { punto: "bg-urgente", borde: "border-urgente", texto: "text-urgente" },
-  pronto: { punto: "bg-pronto", borde: "border-pronto", texto: "text-pronto" },
+  pronto: { punto: "bg-pronto", borde: "border-pronto", texto: "text-pronto-texto" },
   tranquilo: { punto: "bg-tranquilo", borde: "border-arena-borde", texto: "text-tranquilo" },
 } as const;
 

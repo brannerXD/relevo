@@ -285,6 +285,47 @@ Sin fondo para que se vea igual en una pestaña clara que en una oscura. La
 `/icono?fondo=1` — ahí el sistema recorta a un círculo y un PNG transparente
 deja un hueco.
 
+## Accesibilidad
+
+No es un adorno en esta aplicación: la usuaria tiene 54 años y la usa de noche,
+cansada. Auditado midiendo en el DOM, no a ojo.
+
+**Contraste.** Dos tokens no pasaban y se corrigieron:
+
+| | Antes | Ahora |
+|---|---|---|
+| Fecha de la vuelta (`pronto` sobre blanco) | **2.93** | **5.00** |
+| Botón principal (blanco sobre `barro`) | **3.99** | **5.23** |
+
+El de la fecha era el peor: no alcanzaba ni el mínimo de texto grande, y es el
+dato más importante de la pantalla.
+
+`--color-barro` y `--color-pronto` **se quedan igual** para lo decorativo —el
+puntico de color, la barra de progreso, el borde—, donde el mínimo es 3 y sí lo
+cumplen. Para texto y para fondo de botón van `--color-pronto-texto` y
+`--color-barro-boton`. Separar el token de texto del decorativo evita tener que
+escoger entre accesibilidad y marca.
+
+Medición: **37 textos en el plan, cero fallas.** Ojo al medir — un fondo con 5 %
+de opacidad **no** es ese color; hay que componer el alfa contra lo que tiene
+debajo. Sin eso salen fallas donde no las hay.
+
+**Objetivos de toque.** El ✕ de quitar un documento medía 31 px de ancho y es
+una acción que borra: difícil de acertar a propósito y fácil de darle sin
+querer. Ahora 44×44, como los enlaces del pie.
+
+Los enlaces «términos de uso» y «política de datos» de la pantalla de cuenta se
+dejan como están: van **dentro de una frase** y WCAG 2.5.8 exceptúa los enlaces
+en línea. Agrandarlos rompería el párrafo.
+
+**Foco de teclado.** No había ninguna regla: quedaba el anillo por defecto de
+Chrome, de menos de un píxel. Ahora 3 px en verde monte con separación, con
+`:focus-visible` para que salga con Tab y no cada vez que se toca con el dedo.
+
+**Lo que ya estaba bien:** `lang="es-CO"`, ningún campo sin etiqueta, ninguna
+imagen sin `alt`, jerarquía de encabezados correcta, sin desborde horizontal a
+375 px, y todo el movimiento se apaga con `prefers-reduced-motion`.
+
 ## Voz
 
 - **Usted**, nunca tú.

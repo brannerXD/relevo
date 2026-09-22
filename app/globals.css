@@ -14,6 +14,18 @@
   --color-pronto: #c98a2e;
   --color-tranquilo: #4f7a6a;
 
+  /*
+   * Medidos, no supuestos. Contra blanco:
+   *   barro     #C2663E → 3.99 : no alcanza para texto (hace falta 4.5)
+   *   pronto    #C98A2E → 2.93 : no alcanza ni para texto grande (hace falta 3)
+   *
+   * Los dos de arriba se quedan para lo decorativo —el puntico de color, la
+   * barra de progreso, el borde— donde el mínimo es 3 y sí lo cumplen. Para
+   * TEXTO y para fondo de botón van estos dos, que sí pasan AA:
+   */
+  --color-pronto-texto: #956622; /* 5.00 sobre blanco, 4.65 sobre arena */
+  --color-barro-boton: #a85535; /* blanco encima: 5.23 */
+
   --font-titulo: var(--fuente-titulo), Georgia, serif;
   --font-cuerpo: var(--fuente-cuerpo), system-ui, sans-serif;
 }
@@ -42,6 +54,27 @@ h3 {
 button,
 [role="button"] {
   min-height: 48px;
+}
+
+/* ── Foco de teclado ───────────────────────────────────────────────────── */
+
+/*
+ * No había ninguna regla de foco: quedaba el anillo por defecto de Chrome, de
+ * menos de un píxel. Para alguien que navega con teclado —o con las manos
+ * temblorosas y un teclado externo— eso es invisible.
+ *
+ * `:focus-visible` y no `:focus`: así el anillo sale con Tab pero no cada vez
+ * que se toca un botón con el dedo, que es ruido.
+ */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid var(--color-monte);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Sobre fondo verde el anillo verde no se vería. */
+.bg-monte:focus-visible {
+  outline-color: var(--color-tinta);
 }
 
 /* ── El búho ───────────────────────────────────────────────────────────── */

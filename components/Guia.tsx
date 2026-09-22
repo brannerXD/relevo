@@ -102,7 +102,7 @@ export function Guia({ onListo }: { onListo: () => void }) {
 
         <button
           onClick={() => (ultimo ? onListo() : setI(i + 1))}
-          className="w-full rounded-xl bg-barro px-6 py-4 text-lg font-semibold text-white transition active:scale-[0.98]"
+          className="w-full rounded-xl bg-barro-boton px-6 py-4 text-lg font-semibold text-white transition active:scale-[0.98]"
         >
           {ultimo ? "Entendido, empecemos" : "Siga"}
         </button>

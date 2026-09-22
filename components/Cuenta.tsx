@@ -194,7 +194,7 @@ export function PantallaCuenta({ cuenta, tieneTrabajo, onListo, onVolver }: Prop
         <button
           type="submit"
           disabled={cargando}
-          className="w-full rounded-xl bg-barro px-6 py-4 text-lg font-semibold text-white transition active:scale-[0.98] disabled:opacity-50"
+          className="w-full rounded-xl bg-barro-boton px-6 py-4 text-lg font-semibold text-white transition active:scale-[0.98] disabled:opacity-50"
         >
           {cargando ? "Un momento…" : guardando ? "Guardar mi cuenta" : "Entrar"}
         </button>
