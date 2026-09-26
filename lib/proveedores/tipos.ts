@@ -27,7 +27,7 @@ export interface Proveedor {
 export class SinProveedor extends Error {
   constructor() {
     super(
-      "No hay ninguna clave configurada. Ponga ANTHROPIC_API_KEY o GEMINI_API_KEY en .env.local y reinicie el servidor.",
+      "No hay ninguna clave configurada. Ponga ANTHROPIC_API_KEY, GEMINI_API_KEY o GROQ_API_KEY en .env.local y reinicie el servidor.",
     );
     this.name = "SinProveedor";
   }

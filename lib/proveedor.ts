@@ -1,6 +1,8 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { proveedorClaude } from "./proveedores/claude";
 import { proveedorGemini } from "./proveedores/gemini";
+import { proveedorGroq } from "./proveedores/groq";
+import { enCadena } from "./proveedores/cadena";
 import { RespuestaInvalida, SinProveedor, type Proveedor } from "./proveedores/tipos";
 
 export type { Proveedor, Imagen } from "./proveedores/tipos";
@@ -9,33 +11,56 @@ export { SinProveedor, RespuestaInvalida } from "./proveedores/tipos";
 let memoria: Proveedor | null = null;
 
 /**
- * Elige el motor según la clave que haya configurada.
+ * Arma la fila de motores con las claves que haya.
  *
- * Orden: si hay clave de Anthropic se usa Claude, porque lee mejor la letra
- * manuscrita. Si no, Gemini, que tiene capa gratuita. Con RELEVO_PROVEEDOR se
- * puede forzar uno de los dos, por ejemplo para comparar calidad y costo.
+ * Antes esto elegía UNO. Ahora los pone en cadena, y el cambio salió de medir:
+ * contra la capa gratuita de Gemini, 5 corridas seguidas dieron 2 éxitos y 3
+ * fallas — dos por congestión y una por cuota agotada. Con un solo motor, eso
+ * es una persona de cada dos viendo un error en vez de su plan.
+ *
+ * El orden es por calidad leyendo letra manuscrita, que es el caso difícil:
+ *
+ *   1. Claude  — el que mejor lee a mano. Requiere saldo.
+ *   2. Gemini  — capa gratuita con visión. Bueno, pero se congestiona.
+ *   3. Groq    — respaldo. Rápido y gratis, pero el más flojo leyendo.
+ *
+ * Groq va de último a propósito: que conteste él es mejor que un error, pero
+ * peor que los otros dos. No es un empate.
+ *
+ * RELEVO_PROVEEDOR fuerza uno solo y apaga la cadena, que es como se comparan
+ * calidad y costo sobre las mismas fotos.
  */
 export function proveedor(): Proveedor {
   if (memoria) return memoria;
 
   const forzado = process.env.RELEVO_PROVEEDOR?.toLowerCase();
-  const hayClaude = !!process.env.ANTHROPIC_API_KEY;
-  const hayGemini = !!(process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY);
+  const disponibles: Record<string, () => Proveedor> = {};
 
-  if (forzado === "claude") {
-    if (!hayClaude) throw new Error("RELEVO_PROVEEDOR=claude pero falta ANTHROPIC_API_KEY.");
-    memoria = proveedorClaude();
-  } else if (forzado === "gemini") {
-    if (!hayGemini) throw new Error("RELEVO_PROVEEDOR=gemini pero falta GEMINI_API_KEY.");
-    memoria = proveedorGemini();
-  } else if (hayClaude) {
-    memoria = proveedorClaude();
-  } else if (hayGemini) {
-    memoria = proveedorGemini();
-  } else {
-    throw new SinProveedor();
+  if (process.env.ANTHROPIC_API_KEY) disponibles.claude = proveedorClaude;
+  if (process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY)
+    disponibles.gemini = proveedorGemini;
+  if (process.env.GROQ_API_KEY) disponibles.groq = proveedorGroq;
+
+  if (forzado) {
+    const crear = disponibles[forzado];
+    if (!crear) {
+      throw new Error(
+        `RELEVO_PROVEEDOR=${forzado} pero no hay clave para ese motor. Disponibles: ${
+          Object.keys(disponibles).join(", ") || "ninguno"
+        }.`,
+      );
+    }
+    memoria = crear();
+    return memoria;
   }
 
+  const fila = (["claude", "gemini", "groq"] as const)
+    .filter((n) => disponibles[n])
+    .map((n) => disponibles[n]());
+
+  if (fila.length === 0) throw new SinProveedor();
+
+  memoria = enCadena(fila);
   return memoria;
 }
 

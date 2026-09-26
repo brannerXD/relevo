@@ -20,22 +20,55 @@ Sin clave la aplicación abre igual y el botón **«Ver un ejemplo»** funciona:
 carga documentos de muestra y recorre las tres pantallas. Lo que no funciona
 sin clave es subir fotos reales.
 
-### Dos motores, una interfaz
+### El límite que decide todo: 20 peticiones al día
 
-Relevo no depende de un proveedor. Ponga **una** de las dos claves en
-`.env.local`:
+Medido, no supuesto. La capa gratuita de Gemini responde esto:
 
-| Motor | Clave | Cuándo |
-|---|---|---|
-| **Claude** | `ANTHROPIC_API_KEY` | Lee mejor la letra manuscrita. Requiere saldo. |
-| **Gemini** | `GEMINI_API_KEY` | Tiene capa gratuita con visión. |
+```
+Quota exceeded ... limit: 20, model: gemini-3.6-flash
+quotaId: GenerateRequestsPerDayPerProjectPerModel-FreeTier
+```
 
-Con las dos configuradas usa Claude. `RELEVO_PROVEEDOR=gemini` fuerza el otro,
-que es como se comparan calidad y costo sobre las mismas fotos.
+**Veinte peticiones por día, por proyecto.** No por minuto. Y cada sesión
+gasta al menos dos —una por foto leída, más una para armar el plan—, así que
+el techo real es del orden de **diez documentos diarios entre todo el mundo**.
 
-Una combinación que estira el presupuesto: Gemini gratis para las decenas de
-pruebas de extracción mientras se afina el prompt, y Claude para la
-reconciliación, que es donde se nota la calidad del razonamiento.
+Eso no alcanza ni para probar con tres personas, ni para que un jurado abra el
+enlace. Por eso los motores van **en cadena** y no de a uno.
+
+### Tres motores, una interfaz, en fila
+
+Relevo no depende de un proveedor. Con varias claves puestas, los prueba en
+orden hasta que uno responda (`lib/proveedores/cadena.ts`):
+
+| Orden | Motor | Clave | Por qué ahí |
+|---|---|---|---|
+| 1 | **Claude** | `ANTHROPIC_API_KEY` | El que mejor lee letra a mano. Requiere saldo. |
+| 2 | **Gemini** | `GEMINI_API_KEY` | Buena lectura y gratis, pero **20 peticiones al día**. |
+| 3 | **Groq** | `GROQ_API_KEY` | Respaldo: ~1.000 al día y muy rápido, pero el más flojo leyendo. |
+
+Groq va de último **a propósito**. Que conteste él es mejor que un error, pero
+peor que los otros dos: no es un empate. Y va como red de seguridad porque su
+cuota diaria es unas cincuenta veces la de Gemini.
+
+Lo que hace caer al siguiente motor: 429, 503, 5xx, fallos de red, claves
+inválidas, y respuestas que no cumplen el esquema. Lo que **no**: un 400 por
+una imagen corrupta, que va a fallar igual en todos.
+
+**Por qué esto es seguro en una aplicación de salud:** el esquema es todo
+nullable y la pantalla de revisión es obligatoria. Un modelo flojo devuelve
+vacíos, no inventos, y la persona lo ve antes de que entre al plan. Si algún
+día se quita esa pantalla, la cadena deja de ser segura.
+
+Verificado con una clave de Claude inválida a propósito:
+
+```
+[relevo:leer] Claude no pudo (401). Pasando al siguiente.
+[relevo:leer] respondió el respaldo Gemini (gemini-3.6-flash)
+```
+
+`RELEVO_PROVEEDOR=gemini` fuerza uno solo y apaga la cadena, que es como se
+comparan calidad y costo sobre las mismas fotos.
 
 ### Probar la lectura desde la terminal
 
