@@ -20,21 +20,33 @@ Sin clave la aplicación abre igual y el botón **«Ver un ejemplo»** funciona:
 carga documentos de muestra y recorre las tres pantallas. Lo que no funciona
 sin clave es subir fotos reales.
 
-### El límite que decide todo: 20 peticiones al día
+### El modelo importa más que el proveedor
 
-Medido, no supuesto. La capa gratuita de Gemini responde esto:
+La capa gratuita de Gemini **no tiene un límite: tiene uno por modelo**
+(`GenerateRequestsPerDayPerProjectPerModel`). Y la diferencia entre modelos es
+absurda. Números del panel de la propia cuenta
+(`aistudio.google.com/rate-limit`), no de la documentación:
 
-```
-Quota exceeded ... limit: 20, model: gemini-3.6-flash
-quotaId: GenerateRequestsPerDayPerProjectPerModel-FreeTier
-```
+| Modelo | RPM | **RPD** | Lectura de la fórmula de prueba |
+|---|---|---|---|
+| **gemini-3.5-flash-lite** | 15 | **500** | correcta, **2.4 s** |
+| gemini-3.1-flash-lite | 15 | 500 | (no probado) |
+| gemini-3.6-flash | 5 | **20** | correcta, 12–17 s |
+| 3.5 / 3.7 / 3.8 Flash, 2.5 Flash | 5 | 20 | — |
 
-**Veinte peticiones por día, por proyecto.** No por minuto. Y cada sesión
-gasta al menos dos —una por foto leída, más una para armar el plan—, así que
-el techo real es del orden de **diez documentos diarios entre todo el mundo**.
+Arrancamos con `gemini-3.6-flash` y **20 peticiones al día**. Como cada sesión
+gasta al menos dos —una por foto más una para el plan—, el techo real eran
+**diez documentos diarios entre todo el mundo**: no alcanzaba ni para probar
+con tres personas.
 
-Eso no alcanza ni para probar con tres personas, ni para que un jurado abra el
-enlace. Por eso los motores van **en cadena** y no de a uno.
+`flash-lite` da **veinticinco veces** esa cuota, el triple de ritmo, es cinco
+veces más rápido y extrajo exactamente lo mismo. Por eso es el predeterminado.
+
+**La lección, que costó una tarde:** cuando una capa gratuita se queda corta,
+mire primero si hay otro modelo del mismo proveedor antes de salir a buscar
+otro proveedor. La cuota es por modelo.
+
+Aun así los motores van **en cadena**: 500 al día es cómodo, no infinito.
 
 ### Tres motores, una interfaz, en fila
 
@@ -44,7 +56,7 @@ orden hasta que uno responda (`lib/proveedores/cadena.ts`):
 | Orden | Motor | Clave | Por qué ahí |
 |---|---|---|---|
 | 1 | **Claude** | `ANTHROPIC_API_KEY` | El que mejor lee letra a mano. Requiere saldo. |
-| 2 | **Gemini** | `GEMINI_API_KEY` | Buena lectura y gratis, pero **20 peticiones al día**. |
+| 2 | **Gemini** | `GEMINI_API_KEY` | Flash Lite: 500 al día, rápido y gratis. |
 | 3 | **Groq** | `GROQ_API_KEY` | Respaldo: ~1.000 al día y muy rápido, pero el más flojo leyendo. |
 
 Groq va de último **a propósito**. Que conteste él es mejor que un error, pero

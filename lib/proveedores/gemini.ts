@@ -79,13 +79,26 @@ function interpretar<T extends z.ZodType>(esquema: T, texto: string | undefined)
 export function proveedorGemini(): Proveedor {
   const apiKey = process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY;
   const ai = new GoogleGenAI({ apiKey });
-  // Flash es el que tiene capa gratuita y ve imágenes. Se puede cambiar por
-  // variable de entorno si Google mueve los nombres o los límites.
-  //
-  // Ojo: gemini-2.5-flash devuelve 404 en cuentas nuevas — Google lo cerró a
-  // usuarios nuevos y responde "no longer available to new users". No es un
-  // problema de la llave; la llave autentica bien y el error igual es 404.
-  const modelo = process.env.GEMINI_MODELO ?? "gemini-3.6-flash";
+  /*
+   * Flash LITE, y no el Flash normal. Los números son del panel de la propia
+   * cuenta (aistudio.google.com/rate-limit), no de la documentación:
+   *
+   *                        RPM     RPD     lectura de la fórmula de prueba
+   *   gemini-3.6-flash       5      20     correcta, 12-17 s
+   *   gemini-3.5-flash-lite 15     500     correcta,  2.4 s
+   *
+   * Veinticinco veces la cuota diaria, el triple de ritmo y cinco veces más
+   * rápido, con la misma extracción. No hay nada que pensar.
+   *
+   * La cuota es POR MODELO ("PerProjectPerModel"), así que cambiar de nombre
+   * aquí da presupuesto nuevo — útil el día que se agote.
+   *
+   * Ojo: los nombres caducan. gemini-2.5-flash ya devuelve 404 en cuentas
+   * nuevas ("no longer available to new users"), y el error parece de llave
+   * sin serlo. Si un día deja de leer, pruebe otro nombre con GEMINI_MODELO
+   * antes de sospechar de la clave.
+   */
+  const modelo = process.env.GEMINI_MODELO ?? "gemini-3.5-flash-lite";
 
   return {
     nombre: "Gemini",
