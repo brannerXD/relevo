@@ -258,6 +258,37 @@ por verificación.
 - **Confirm email** — se dejó encendido a propósito. La usuaria sigue
   trabajando mientras tanto; el correo se confirma cuando abra el enlace.
 
+## El riesgo que no se ve en ninguna prueba
+
+**Supabase pausa los proyectos gratuitos tras unos días sin actividad.** Y
+cuando eso pasa, Relevo no se degrada: se muere. Sin Supabase no hay sesión
+anónima, y sin sesión el guardia rechaza todo. La página abre, el búho se
+mueve, y nada funciona.
+
+Nos pasó: doce días sin tocarlo y el host dejó de resolver.
+
+```
+getaddrinfo ENOTFOUND dcxiyhmotkhufvexrxyn.supabase.co
+status: "COMING_UP"
+```
+
+Despertarlo tomó **75 segundos**, y durante ese rato la API devolvía
+`Bad Gateway`. Si eso ocurre cuando alguien abre el enlace por primera vez, no
+hay segunda oportunidad.
+
+Por eso existe `app/api/latido/route.ts`: una consulta diaria que cuenta como
+actividad y evita la pausa. La dispara el cron de `vercel.json` a las 9:00 UTC.
+Es la ruta más aburrida del proyecto y probablemente la más importante.
+
+**Antes de una demostración, compruébelo igual:**
+
+```bash
+curl -s https://relevo-rho.vercel.app/api/latido
+```
+
+Si responde `{"ok":true,...}` la base está despierta. Si no, ábralo y espere
+un minuto y medio antes de que llegue nadie.
+
 ## Si deja de cargar en local
 
 Síntoma: la página da 500, o carga pero ningún botón responde. En los logs
